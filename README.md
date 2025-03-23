@@ -7,7 +7,7 @@
 This project implements **Neural Style Transfer (NST)** using deep learning, enabling users to apply the style of one image (artwork) to another image while preserving the original content structure. The model is based on **VGG-19**, a pre-trained convolutional neural network.
 
 ### **✨ Example Output**
-<img src="example_output.jpg" width="600">
+<img src="static/styled_image.jpg" width="600">
 
 ---
 
@@ -40,15 +40,16 @@ python style_transfer.py --content images/content.jpg --style images/style.jpg -
 | `--content`      | Path to the content image           | Required |
 | `--style`        | Path to the style image             | Required |
 | `--output`       | Path to save the stylized image     | `outputs/stylized.jpg` |
-| `--epochs`       | Number of training epochs          | `500` |
+| `--epochs`       | Number of training epochs          | `100` |
 | `--lr`          | Learning rate for optimization     | `0.001` |
 
 ---
 
 ## **📊 Results**
-| Content Image | Style Image | Output Image |
-|--------------|------------|--------------|
-| ![Content](images/content.jpg) | ![Style](images/style.jpg) | ![Stylized](outputs/stylized.jpg) |
+
+- **Content Image**: ![Content Image](static/uploads/content.jpg)
+- **Style Image**: ![Style Image](static/uploads/style.jpg)
+- **Result Image**: ![Result Image](static/uploads/output.jpg)
 
 ---
 
