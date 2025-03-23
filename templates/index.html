@@ -1,0 +1,129 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+    .grid-container {
+        display: grid;
+        gap: 2rem;
+    }
+    
+    .grid-box {
+        border: 1px solid #ddd;
+        padding: 1rem;
+        border-radius: 8px;
+    }
+    
+    .example-images {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+    }
+    
+    .example-image img {
+        width: 99%;
+        height: auto;
+        border-radius: 5px;
+    }
+    
+    .submit-btn {
+        background-color: #3498db;
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 1rem;
+    }
+    
+    .error-message {
+        color: red;
+        padding: 1rem;
+        background-color: #ffebee;
+        border-radius: 4px;
+        margin-top: 1rem;
+    }
+</style>
+
+<div class="grid-container">
+    <div class="intro">
+        <h2>Digital Art using Fast Neural Style Transfer!</h2>
+        <div><p>We take 2 images --- Content Image & Style Image --- and blend them
+        together so that the resulting output image retains the core elements of
+        the content image, but appears to be "painted" in the style of the
+        style reference image.</p></div>
+    </div>
+
+    <div class="example-images">
+        <div class="example-image">
+            <img src="{{ url_for('static', filename='example1.gif') }}" alt="Example 1">
+        </div>
+        <div class="example-image">
+            <img src="{{ url_for('static', filename='example2.gif') }}" alt="Example 2">
+        </div>
+        <div class="example-image">
+            <img src="{{ url_for('static', filename='example3.gif') }}" alt="Example 3">
+        </div>
+    </div>
+
+
+<style>
+    .grid-container {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+    
+    .grid-box {
+        border: 1px solid #ddd;
+        padding: 1rem;
+        border-radius: 8px;
+        flex: 1 1 45%; /* Allows for two boxes side by side */
+    }
+
+    /* Make boxes stack on smaller screens */
+    @media (max-width: 768px) {
+        .grid-box {
+            flex: 1 1 100%;
+        }
+    }
+</style>
+
+
+    <div class="grid-box">
+        <h3>File Upload Method</h3>
+        <form action="{{ url_for('upload_files') }}" method="POST" enctype="multipart/form-data">
+            <div class="file-input">
+                <label for="content_image">Upload Content Image:</label>
+                <input type="file" name="content_image" id="content_image" accept="image/*" required>
+            </div>
+            <div class="file-input">
+                <label for="style_image">Upload Style Image:</label>
+                <input type="file" name="style_image" id="style_image" accept="image/*" required>
+            </div>
+            <button type="submit" class="submit-btn">Apply Style Transfer</button>
+        </form>
+    </div>
+
+    <div class="grid-box">
+        <h3>Camera Capture Method</h3>
+        <div>
+            <a href="{{ url_for('capture_content') }}" class="submit-btn">Capture Content Image</a>
+        </div>
+        <div>
+            <a href="{{ url_for('capture_style') }}" class="submit-btn">Capture Style Image</a>
+        </div>
+        <form action="{{ url_for('transfer') }}" method="POST">
+            <button type="submit" class="submit-btn">Transfer Style</button>
+        </form>
+    </div>
+</div>
+
+{% if error %}
+<div class="error-message">
+    {{ error }}
+</div>
+{% endif %}
+{% endblock %}

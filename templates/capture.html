@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+    .capture-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .video-container {
+        width: 100%;
+        margin: 2rem 0;
+        background-color: #000;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    #video {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+    
+    .button-container {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+    }
+    
+    .submit-btn {
+        background-color: #3498db;
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        min-width: 120px;
+        text-align: center;
+    }
+</style>
+
+<div class="capture-container">
+    <h2>Capture {{ mode.title() }} Image</h2>
+
+    <div class="video-container">
+        <video id="video" autoplay playsinline></video>
+        <canvas id="canvas" style="display: none;"></canvas>
+    </div>
+
+    <div class="button-container">
+        <button id="capture-btn" class="submit-btn">Capture</button>
+        <a href="{{ url_for('index') }}" class="submit-btn">Back to Home</a>
+    </div>
+</div>
+
+<script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const captureBtn = document.getElementById('capture-btn');
+    const mode = '{{ mode }}';
+
+    async function setupCamera() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+        } catch (err) {
+            console.error('Error accessing camera:', err);
+            alert('Error accessing camera. Please make sure you have granted camera permissions.');
+        }
+    }
+
+    setupCamera();
+
+    captureBtn.addEventListener('click', () => {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        
+        const imageData = canvas.toDataURL('image/jpeg');
+        
+        fetch('{{ url_for("capture") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `mode=${mode}&image=${encodeURIComponent(imageData)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Image captured successfully!');
+                window.location.href = '{{ url_for("index") }}';
+            } else {
+                alert('Error capturing image: ' + (data.error || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error capturing image. Please try again.');
+        });
+    });
+</script>
+{% endblock %}
