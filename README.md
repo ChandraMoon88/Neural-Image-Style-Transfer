@@ -54,10 +54,10 @@ python style_transfer.py --content images/content.jpg --style images/style.jpg -
 
 Check out this web interface for implementation of this project:
 
-<img src="static/web.png" width="500">
+<img src="static/web.png" width="800">
 Check out this output image showing the style transfer in action:
 
-<img src="static/output.png" width="500">
+<img src="static/output.png" width="800">
 
 ---
 
