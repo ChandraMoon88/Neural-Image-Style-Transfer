@@ -47,9 +47,14 @@ python style_transfer.py --content images/content.jpg --style images/style.jpg -
 
 ## **📊 Results**
 
-- **Content Image**: ![Content Image](static/uploads/content.jpg )
-- **Style Image**: ![Style Image](static/uploads/style.jpg)
-- **Result Image**: ![Result Image](static/uploads/output.jpg )
+- **Content Image**: ![Content Image](static/uploads/content.jpg )**Style Image**: ![Style Image](static/uploads/style.jpg)**Result Image**: ![Result Image](static/uploads/output.jpg )
+
+---
+## Demo
+
+Check out this demo image showing the style transfer in action:
+
+![Demo Image](https://example.com/path/to/demo/image.jpg)
 
 ---
 
